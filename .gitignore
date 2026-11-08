@@ -1,0 +1,7 @@
+frames/
+.edge*/
+.impeccable/review/
+.impeccable/mocks/
+node_modules/
+.env*
+*.log
