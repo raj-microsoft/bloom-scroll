@@ -1,1 +1,11 @@
-{"creator":"Bloom procedural artwork","synthetic":true,"source":"../generate.py","reference":"Original authored botanical cutaway composition; no external image inputs","files":{"reference.png":"Original generated reference composition","start.png":"Frame 0, embedded Origin and Prompt PNG metadata","end.png":"Frame 120, embedded Origin and Prompt PNG metadata","stage-0.webp":"720px derivative of frame 0","stage-1.webp":"720px derivative of frame 40","stage-2.webp":"720px derivative of frame 80","stage-3.webp":"720px derivative of frame 120","bloom.mp4":"121 original procedural frames encoded by ffmpeg, H.264 all-keyframe"},"font":{"name":"Figtree","source":"https://github.com/google/fonts/tree/main/ofl/figtree","license":"SIL Open Font License 1.1; FONT-LICENSE.txt"}}
+{
+  "aiGenerated": true,
+  "images": "ChatGPT image generation (supplied start and end reference images)",
+  "motion": "Gemini Veo image-to-video with the supplied start image; no last-frame control in this UI",
+  "encoding": "ffmpeg H.264, 15 fps, every frame a keyframe, 1280x720, silent, faststart",
+  "bytes": 7520751,
+  "referenceEnd": "ChatGPT end image is an art-direction reference; stage stills and end.png are from the actual Veo film",
+  "font": "Figtree / SIL Open Font License",
+  "frameCount": 150,
+  "durationSeconds": 10
+}

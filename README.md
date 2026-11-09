@@ -1,21 +1,19 @@
 # Bloom
-A fictional spring bulb subscription told through an original procedural tulip animation.
+A fictional spring bulb subscription told through a photorealistic AI-generated tulip time-lapse.
 
 ## Guide and method
-[Codex + GPT 5.5 + Kling = $15k Animated Website](https://youtu.be/eUkCSssoYHw), Harnoor Singh / Singh in USA. Library guides 08 and 14 refer to the same workflow: reference → START/END → transition video → scroll progress → iterate.
+[Codex + Kling = $15k Animated Website](https://youtu.be/eUkCSssoYHw), Harnoor Singh / Singh in USA. Library guides 08 and 14 describe the same workflow: reference → START/END → transition video → scroll progress → iterate.
 
-Paid GPT image generation and Kling/fal.ai are replaced by original Pillow raster artwork and ffmpeg. No keys or paid services. The reference composition, START, END and all 121 frames are created in `generate.py`. The video is H.264, every frame an I-frame, 30 fps, roughly 1.9 MB. JS maps bounded scroll progress to `video.currentTime`, coalescing seek events. A downloaded Blob supports servers without byte-range seeking. A still chapter mode supports reduced motion and media failures.
+**ChatGPT image generation** created the supplied start/end references. **Gemini Veo** generates the growth video from the start image using a new chat in the owner's authorized logged-in browser. The interface did not expose a last-frame input, so the end reference is art direction rather than an exact output constraint. All imagery is labelled AI-generated, not documentary botanical photography.
 
-## Rebuild
-Requires Python, Pillow and ffmpeg.
+ffmpeg encodes the resulting film as silent H.264, every frame an I-frame, 15 fps at 1280 × 720, with faststart. JavaScript maps bounded scroll progress to `video.currentTime`, coalescing seek events. A downloaded Blob supports hosts without byte-range seeking. A still chapter mode supports reduced motion and media failures. The video contains 150 frames over 10 seconds and is 7,520,751 bytes. Current payload/provenance: `assets/provenance.json`.
+
+## Serving and rebuilding media
+Serve this directory with any static server. No build step, framework, telemetry, form submission or backend.
 ```
-python generate.py
-ffmpeg -y -framerate 30 -i frames/%04d.png -c:v libx264 -preset slow -crf 24 -g 1 -keyint_min 1 -pix_fmt yuv420p -movflags +faststart assets/bloom.mp4
+ffmpeg -i bloom-veo.mp4 -an -vf fps=15,scale=1280:720 -c:v libx264 -crf 23 -preset slow -g 1 -keyint_min 1 -sc_threshold 0 -pix_fmt yuv420p -movflags +faststart assets/bloom.mp4
 ```
-Serve this directory with any static server. No build step, framework, telemetry, form submission, or backend. Font: self-hosted Figtree under SIL OFL; license in assets/FONT-LICENSE.txt.
-
-## Provenance
-Every image is original synthetic procedural artwork by this project, not photography. PNGs contain origin/prompt metadata. WebP stage images and MP4 are derivatives of those procedural frames. `assets/provenance.json` records sources. Biological timing is illustrative.
+The original `generate.py` is retained as historical source but is not used by the current media. Chapter stills come from the same Veo film, keeping still mode consistent with animation. Typeface: self-hosted Figtree, SIL OFL (`assets/FONT-LICENSE.txt`). Growth timing is illustrative.
 
 ## Testing
-`test.cjs` uses the host's existing playwright-core and installed Edge; adjust the dependency path for another machine. It checks 1440/390 layouts, forward/reverse seeking, box preview open/close, reduced motion and page errors. Set TEST_URL to test the published page. Development records are PRODUCT.md, SURFACE.md, DESIGN.md and .impeccable/design.json; they are not linked by the site.
+`test.cjs` uses the host's playwright-core and installed headless Edge. It checks 1440/390 layouts, forward/reverse seeking, box preview open/close, reduced motion and page errors. Set `TEST_URL` to test the published page. Design documentation remains in PRODUCT.md, SURFACE.md, DESIGN.md and `.impeccable/design.json`.
