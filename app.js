@@ -6,8 +6,10 @@ let staticMode=reduced.matches,chapter=-1,desired=0,queued=false,ready=false;
 function copy(i){if(chapter===i)return;chapter=i;headline.innerHTML=chapters[i][0];line.innerHTML=chapters[i][1];document.querySelectorAll('[data-stage]').forEach((b,j)=>b.setAttribute('aria-pressed',String(j===i)));}
 function seek(){if(!ready||staticMode||film.seeking)return;const t=desired*Math.max(0,film.duration-.035);if(Math.abs(film.currentTime-t)>.014)film.currentTime=t;}
 film.addEventListener('seeked',seek);film.addEventListener('loadedmetadata',()=>{ready=true;seek()});
+// Select once per visit: resizing must not interrupt an in-progress scrub or download both variants.
+const videoSource=matchMedia('(max-width: 767px)').matches?'assets/bloom-mobile.mp4':'assets/bloom.mp4';
 // A local Blob also makes seeking reliable on static hosts without byte-range responses.
-fetch('assets/bloom.mp4').then(r=>{if(!r.ok)throw new Error('Video download failed');return r.blob()}).then(blob=>{film.src=URL.createObjectURL(blob);film.load()}).catch(()=>{film.src='assets/bloom.mp4';film.load();document.querySelector('#media-status').textContent='Using the direct video. Still view is also available.'});
+fetch(videoSource).then(r=>{if(!r.ok)throw new Error('Video download failed');return r.blob()}).then(blob=>{film.src=URL.createObjectURL(blob);film.load()}).catch(()=>{film.src=videoSource;film.load();document.querySelector('#media-status').textContent='Using the direct video. Still view is also available.'});
 film.addEventListener('error',()=>{ready=false;staticMode=true;applyMode();document.querySelector('#media-status').textContent='Video unavailable. Explore the still chapters instead.'});
 function update(){queued=false;if(staticMode)return;const max=journey.offsetHeight-innerHeight;desired=Math.max(0,Math.min(1,-journey.getBoundingClientRect().top/max));progress.style.width=`${desired*100}%`;copy(Math.min(3,Math.floor(desired*4)));scene.classList.add('light');seek();}
 function schedule(){if(!queued){queued=true;requestAnimationFrame(update)}}

@@ -2,8 +2,12 @@
   "aiGenerated": true,
   "images": "ChatGPT image generation (supplied start and end reference images)",
   "motion": "Gemini Veo image-to-video with the supplied start image; no last-frame control in this UI",
-  "encoding": "ffmpeg H.264, 15 fps, every frame a keyframe, 1280x720, silent, faststart",
-  "bytes": 7520751,
+  "encoding": "ffmpeg H.264, 15 fps, every frame a keyframe, silent, faststart; responsive variants transcoded from the existing film, no new generation",
+  "bytes": 4806445,
+  "variants": {
+    "mobile": { "file": "bloom-mobile.mp4", "width": 720, "height": 406, "crf": 24, "bytes": 2781997, "viewport": "<=767px" },
+    "desktop": { "file": "bloom.mp4", "width": 1280, "height": 720, "crf": 27, "bytes": 4806445, "viewport": ">767px" }
+  },
   "referenceEnd": "ChatGPT end image is an art-direction reference; stage stills and end.png are from the actual Veo film",
   "font": "Figtree / SIL Open Font License",
   "frameCount": 150,
